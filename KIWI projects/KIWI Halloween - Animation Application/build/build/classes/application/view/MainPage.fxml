@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="900.0" prefWidth="1440.0" style="-fx-background-color: #ffffff;" styleClass="background" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.view.AnimationController">
+   <children>
+      <AnchorPane fx:id="prizePane" layoutX="51.0" layoutY="32.0" prefHeight="878.0" prefWidth="1402.0" AnchorPane.leftAnchor="41.0" AnchorPane.topAnchor="22.0">
+         <children>
+            <ImageView fitHeight="723.0" fitWidth="715.0" layoutX="927.0" layoutY="63.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="92.0" AnchorPane.rightAnchor="-239.14691162109375" AnchorPane.topAnchor="63.0">
+               <image>
+                  <Image url="@gift.jpg" />
+               </image>
+            </ImageView>
+            <Label layoutX="27.0" layoutY="266.0" prefHeight="220.0" prefWidth="982.0" styleClass="header" text="Tu as gagné un cadeau !" textFill="#6fd4f3" AnchorPane.bottomAnchor="392.0" AnchorPane.leftAnchor="27.0" AnchorPane.topAnchor="266.0">
+               <font>
+                  <Font size="85.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+      <ImageView fitHeight="290.0" fitWidth="910.0" layoutX="32.0" layoutY="612.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@kiwi-logo.jpg" />
+         </image>
+      </ImageView>
+      <Label fx:id="titleLabel" layoutX="63.0" layoutY="193.0" styleClass="header" text="KIWI Animation Application" textFill="#6fd4f3">
+         <font>
+            <Font size="72.0" />
+         </font>
+      </Label>
+      <AnchorPane fx:id="shotPane" layoutX="31.0" layoutY="12.0" prefHeight="878.0" prefWidth="1402.0" visible="false" AnchorPane.leftAnchor="41.0" AnchorPane.topAnchor="22.0">
+         <children>
+      <ImageView fitHeight="806.0" fitWidth="570.0" layoutX="921.0" layoutY="36.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="36.0" AnchorPane.rightAnchor="28.74444580078125" AnchorPane.topAnchor="36.0">
+         <image>
+            <Image url="@shot.jpg" />
+            
+         </image>
+      </ImageView>
+      <Label layoutX="27.0" layoutY="266.0" prefHeight="220.0" prefWidth="778.0" styleClass="header" text="Bois un shot !" textFill="#6fd4f3" AnchorPane.bottomAnchor="392.0" AnchorPane.leftAnchor="27.0" AnchorPane.topAnchor="266.0">
+               <font>
+                  <Font size="130.0" />
+               </font></Label>
+   </children>
+</AnchorPane>
+      <AnchorPane fx:id="wheelPane" layoutX="41.0" layoutY="22.0" prefHeight="878.0" prefWidth="1402.0" visible="false" AnchorPane.leftAnchor="41.0" AnchorPane.topAnchor="22.0">
+         <children>
+            <ImageView fitHeight="747.0" fitWidth="739.0" layoutX="972.0" layoutY="49.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="91.6988525390625" AnchorPane.rightAnchor="-309.0" AnchorPane.topAnchor="49.0">
+               <image>
+                  <Image url="@wheel.jpg" />
+               </image>
+            </ImageView>
+            <Label layoutX="27.0" layoutY="266.0" prefHeight="220.0" prefWidth="930.0" styleClass="header" text="Tourne la roue !" textFill="#6fd4f3" AnchorPane.bottomAnchor="392.0" AnchorPane.leftAnchor="27.0" AnchorPane.topAnchor="266.0">
+               <font>
+                  <Font size="130.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+      <Label fx:id="errorTextField" layoutX="125.0" layoutY="84.0" textFill="RED">
+         <font>
+            <Font size="48.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>
