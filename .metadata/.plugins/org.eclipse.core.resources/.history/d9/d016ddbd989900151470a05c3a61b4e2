@@ -1,0 +1,11 @@
+package kw.nfc.communication;
+
+import application.model.Guest;
+
+public class Transaction {
+	private int tid;
+	private Guest g;
+	private double amount;
+	private double prevBalance;
+	private double newBalance;
+}

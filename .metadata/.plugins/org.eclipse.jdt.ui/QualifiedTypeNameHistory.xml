@@ -1,2 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<qualifiedTypeNameHistroy/>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="kw.nfc.communication.NFCCommunicationThread"/>
+<fullyQualifiedTypeName name="application.model.Guest"/>
+<fullyQualifiedTypeName name="kw.nfc.communication.ConnectDB"/>
+<fullyQualifiedTypeName name="javafx.concurrent.Service"/>
+<fullyQualifiedTypeName name="kw.nfc.communication.ProcessTransaction"/>
+<fullyQualifiedTypeName name="java.util.List"/>
+<fullyQualifiedTypeName name="application.model.Order"/>
+<fullyQualifiedTypeName name="application.model.Transaction"/>
+<fullyQualifiedTypeName name="java.util.ArrayList"/>
+</qualifiedTypeNameHistroy>

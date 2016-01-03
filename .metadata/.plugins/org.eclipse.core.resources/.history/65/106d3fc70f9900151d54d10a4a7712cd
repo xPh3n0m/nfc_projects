@@ -1,0 +1,11 @@
+package epfl.tnyfeler.eventmanager.model.events;
+
+import javafx.beans.property.StringProperty;
+
+public class Event {
+	
+	private final StringProperty eventName;
+	private final StringProperty eventStatus;
+	private final IntegerProperty numberOfAttendees;
+
+}

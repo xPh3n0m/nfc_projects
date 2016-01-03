@@ -1,0 +1,6 @@
+1449071556884	Rename package 'epfl.tnyfeler.address'
+1449071659097	Rename package 'application'
+1449072918734	Encapsulate field 'numAttendees'
+1449072931824	Encapsulate field 'eventStatus'
+1449072943146	Encapsulate field 'eventName'
+1449077025462	Rename local variable 'eventManagerHomepage'

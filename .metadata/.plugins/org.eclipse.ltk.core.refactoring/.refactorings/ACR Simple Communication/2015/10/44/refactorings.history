@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Copy element &apos;SimpleApp.java&apos; to &apos;NFC_Project - Bar Use Case/src/application&apos;&#x0D;&#x0A;- Original project: &apos;ACR Simple Communication&apos;&#x0D;&#x0A;- Destination element: &apos;NFC_Project - Bar Use Case/src/application&apos;&#x0D;&#x0A;- Original element: &apos;nfc.testing.SimpleApp.java&apos;" description="Copy compilation unit" destination="=NFC_Project - Bar Use Case/src&lt;application" element1="/src&lt;nfc.testing{SimpleApp.java" files="0" flags="589830" folders="0" id="org.eclipse.jdt.ui.copy" policy="org.eclipse.jdt.ui.copyResources" stamp="1446209790812" units="1" version="1.0"/>
+</session>

@@ -1,0 +1,11 @@
+1449131727180	Delete element
+1449132482081	Encapsulate field 'orderId'
+1449132486177	Encapsulate field 'guestId'
+1449132491579	Encapsulate field 'itemId'
+1449132496963	Encapsulate field 'numItem'
+1449132501307	Encapsulate field 'itemPrice'
+1449133594696	Encapsulate field 'transactionId'
+1449134449099	Encapsulate field 'amount'
+1449134474291	Encapsulate field 'guest'
+1449134478840	Encapsulate field 'transactionId'
+1449134482440	Encapsulate field 'orderList'

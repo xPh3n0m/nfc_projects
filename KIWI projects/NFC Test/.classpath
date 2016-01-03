@@ -4,5 +4,6 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="C:/Users/thier_000/Documents/json-simple-1.1.1.jar"/>
 	<classpathentry kind="lib" path="postgresql-9.3-1102.jdbc41.jar"/>
+	<classpathentry exported="true" kind="lib" path="/KIWI Halloween - Animation Application/json-simple-1.1.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

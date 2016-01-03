@@ -1,0 +1,18 @@
+package epfl.tnyfeler.eventmanager.view;
+
+import epfl.tnyfeler.eventmanager.Main;
+import javafx.scene.control.TableView;
+
+import javafx.fxml.FXML;
+
+public class EventManagerHomepageController {
+
+	private Main mainApp;
+	
+    @FXML
+    private TableView<Event> personTable;
+    @FXML
+    private TableColumn<Person, String> firstNameColumn;
+    @FXML
+    private TableColumn<Person, String> lastNameColumn;
+}

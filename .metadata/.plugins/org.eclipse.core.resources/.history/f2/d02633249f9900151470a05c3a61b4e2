@@ -1,0 +1,48 @@
+package application.model;
+
+import java.sql.SQLException;
+import java.util.List;
+
+import kw.nfc.communication.ConnectDB;
+
+public class Transaction {
+	
+	private List<Order> orderList;
+	private int transactionId;
+	private Guest guest;
+	private double amount;
+	
+	private Transaction(int tid, Guest g, double amount, List<Order> orderList) {
+		transactionId = tid;
+		guest = g;
+		this.amount = amount;
+		this.orderList = orderList;
+	}
+	
+	/**
+	 * Creates a new transaction id, without the need for a guest
+	 * @return
+	 * @throws SQLException 
+	 */
+	public static Transaction newTransaction(Guest g, List<Order> orderList, ConnectDB connDB) throws SQLException {
+		double amount = 0;
+		for(Order o : orderList) {
+			amount += o.getItemPrice() * o.getNumItem();
+		}
+		
+		int tid = connDB.newTransaction(g.getGid(), g.getBalance(), amount);
+		
+		for(Order o : orderList) {
+			connDB.addOrder(o);
+		}
+		
+		return new Transaction(tid, g, amount, orderList);
+	}
+	
+	public void processTransaction(int gid, List<Order> orders) {
+		
+		//Get the price of each order, and compute the price of the transaction
+	}
+
+}
+

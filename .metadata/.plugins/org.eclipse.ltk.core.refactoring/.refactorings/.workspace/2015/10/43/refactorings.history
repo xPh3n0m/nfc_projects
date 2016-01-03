@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename Java project &apos;KIWI Halloween - Bar Application&apos; to &apos;NFC_Project - Bar Use Case&apos;&#x0D;&#x0A;- Original element: &apos;KIWI Halloween - Bar Application&apos;&#x0D;&#x0A;- Renamed element: &apos;KIWI Halloween - Bar Application&apos;&#x0D;&#x0A;- Update references to refactored element" description="Rename Java project &apos;KIWI Halloween - Bar Application&apos;" flags="7" id="org.eclipse.jdt.ui.rename.java.project" input="=KIWI Halloween - Bar Application" name="NFC_Project - Bar Use Case" references="true" stamp="1445351640124" version="1.0"/>
+</session>

@@ -26,7 +26,7 @@ public class CommunicationTesting {
 				 System.out.print("Enter identifier: ");
 				 int gid = (new Scanner(System.in)).nextInt();
 				 
-				reader.writeData("{\"id\":" + gid + "}");
+				reader.writeData("{\"gid\":" + gid + "}");
 			} catch (CardException e) {
 				System.out.println("Error writing on wristband");
 				e.printStackTrace();

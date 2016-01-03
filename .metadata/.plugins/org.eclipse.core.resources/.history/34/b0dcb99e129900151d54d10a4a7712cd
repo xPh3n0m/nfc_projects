@@ -1,0 +1,51 @@
+package epfl.tnyfeler.eventmanager.view;
+
+import epfl.tnyfeler.eventmanager.Main;
+import epfl.tnyfeler.eventmanager.model.events.Event;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+
+import javafx.fxml.FXML;
+
+public class EventManagerHomepageController {
+
+	private Main mainApp;
+	
+    @FXML
+    private TableView<Event> eventTable;
+    @FXML
+    private TableColumn<Event, String> eventNameColumn;
+    @FXML
+    private TableColumn<Event, String> eventStatusColumn;
+    @FXML
+    private TableColumn<Event, Integer> numAttendeesColumn;
+    
+    /**
+     * Constructor
+     * Called before initialize() method
+     */
+    public EventManagerHomepageController() {
+    	
+    }
+    
+    /**
+     * Initializes the controller class. This method is automatically called
+     * after the fxml file has been loaded.
+     */
+    @FXML
+    private void initialize() {
+        // Initialize the event table with the columns.
+    	eventNameColumn.setCellValueFactory(cellData -> cellData.getValue().eventName());
+    	eventStatusColumn.setCellValueFactory(cellData -> cellData.getValue().eventStatus());
+    	numAttendeesColumn.setCellValueFactory(cellData -> cellData.getValue().numAttendees().asObject());
+    }
+    
+    /**
+     * Is called by the main application to give a reference back to itself.
+     * 
+     * @param mainApp
+     */
+    public void setMainApp(Main mainApp) {
+        this.mainApp = mainApp;
+    }
+}

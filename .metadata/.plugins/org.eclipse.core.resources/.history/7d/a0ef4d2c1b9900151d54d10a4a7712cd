@@ -1,0 +1,103 @@
+package epfl.tnyfeler.eventmanager.view;
+
+import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
+
+import epfl.tnyfeler.eventmanager.Main;
+import epfl.tnyfeler.eventmanager.model.events.Event;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
+
+public class EventManagerHomepageController implements Initializable {
+
+	private Main mainApp;
+	
+    @FXML
+    private TableView<Event> eventTable;
+    @FXML
+    private TableColumn<Event, String> eventNameColumn;
+    @FXML
+    private TableColumn<Event, String> eventStatusColumn;
+    @FXML
+    private TableColumn<Event, Integer> numAttendeesColumn;
+    
+    
+    private ObservableList<Event> eventData = FXCollections.observableArrayList();
+    
+    @FXML
+    private Button createNewEventButton;
+    
+    @FXML
+    private Button manageEventButton;
+    
+    @FXML
+    private Button exitButton;
+    
+    
+    /**
+     * Constructor
+     * Called before initialize() method
+     */
+    public EventManagerHomepageController() {
+    	
+    }
+    
+	@Override
+	public void initialize(URL location, ResourceBundle resources) {
+        // Initialize the event table with the columns.
+    	eventNameColumn.setCellValueFactory(cellData -> cellData.getValue().eventName());
+    	eventStatusColumn.setCellValueFactory(cellData -> cellData.getValue().eventStatus());
+    	numAttendeesColumn.setCellValueFactory(cellData -> cellData.getValue().numAttendees().asObject());
+	}
+    
+    
+    /**
+     * Is called by the main application to give a reference back to itself.
+     * 
+     * @param mainApp
+     */
+    public void setMainApp(Main mainApp) {
+    	
+    	this.mainApp = mainApp;
+        
+		eventData.add(new Event("Balalec", "Active", 15000));
+		eventData.add(new Event("Montreux Jazz", "Inactive", 60000));
+		eventData.add(new Event("Paleo", "Active", 50000));
+		
+        eventTable.setItems(eventData);
+    }
+    
+    /**
+     * Opens the create event page
+     * @throws IOException 
+     */
+    public void createNewEvent(ActionEvent event) throws IOException {
+    	Stage stage; 
+        Parent root;
+        if(event.getSource()==createNewEventButton){
+           //get reference to the button's stage         
+           stage=(Stage) createNewEventButton.getScene().getWindow();
+           //load up OTHER FXML document
+           root = FXMLLoader.load(getClass().getResource("CreateEventScene.fxml"));
+           //create a new scene with root and set the stage
+           Scene scene = new Scene(root);
+           stage.setScene(scene);
+           stage.show();
+         }
+    }
+
+
+}

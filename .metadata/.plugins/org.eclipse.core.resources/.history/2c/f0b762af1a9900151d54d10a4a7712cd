@@ -1,0 +1,32 @@
+package epfl.tnyfeler.eventmanager.view;
+
+import java.net.URL;
+import java.util.ResourceBundle;
+
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
+import javafx.stage.Stage;
+
+public class CreateEventSceneController implements Initializable {
+	
+	private Stage prevStage;
+	
+	@FXML
+	private TextField eventNameTextField;
+	
+	@FXML
+	private Button createEventButton;
+	
+	public void setPrevStage(Stage stage) {
+		prevStage = stage;
+	}
+
+	@Override
+	public void initialize(URL location, ResourceBundle resources) {
+		// TODO Auto-generated method stub
+		
+	}
+
+}

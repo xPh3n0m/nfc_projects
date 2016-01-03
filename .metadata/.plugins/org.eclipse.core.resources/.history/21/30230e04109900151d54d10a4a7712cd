@@ -1,0 +1,32 @@
+package epfl.tnyfeler.eventmanager.model.events;
+
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+
+public class Event {
+	
+	private final StringProperty eventName;
+	private final StringProperty eventStatus;
+	private final IntegerProperty numAttendees;
+	
+	public Event(String eventName, String eventStatus, int numAttendees) {
+		this.eventName = new SimpleStringProperty(eventName);
+		this.eventStatus = new SimpleStringProperty(eventStatus);
+		this.numAttendees = new SimpleIntegerProperty(numAttendees);
+	}
+
+	public IntegerProperty getNumAttendees() {
+		return numAttendees;
+	}
+
+	public StringProperty getEventStatus() {
+		return eventStatus;
+	}
+
+	public StringProperty getEventName() {
+		return eventName;
+	}
+
+}

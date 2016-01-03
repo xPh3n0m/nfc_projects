@@ -21,7 +21,7 @@ import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.paint.Paint;
 import kw.nfc.communication.ConnectDB;
-import kw.nfc.communication.ConnectDB2;
+import kw.nfc.communication.ConnectDB;
 import kw.nfc.communication.Utility;
 import kw.nfc.communication.WriteOrder;
 
@@ -38,13 +38,14 @@ public class BarController {
     private TextArea noSpirits;
     @FXML
     private TextField actionsTextField;
+
     
     private WriteOrder writeOrder;
 
     // Reference to the main application.
     private Main mainApp;
     
-    private ConnectDB2 connDB;
+    private ConnectDB connDB;
 
     /**
      * The constructor.
@@ -52,7 +53,7 @@ public class BarController {
      */
     public BarController() {
     	writeOrder = new WriteOrder();
-    	connDB = new ConnectDB2();
+    	connDB = new ConnectDB();
     }
 
     /**

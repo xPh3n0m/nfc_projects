@@ -1,0 +1,5 @@
+package epfl.tnyfeler.eventmanager.model.events;
+
+public class Event {
+
+}

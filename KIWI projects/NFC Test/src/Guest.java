@@ -7,6 +7,7 @@ public class Guest {
 	private String name;
 	private int teamId;
 	private int cloakId;
+	private double balance;
 	
 	public Guest(int gid, String name) {
 		this.setGid(gid);
@@ -18,6 +19,7 @@ public class Guest {
 		this.setName(name);
 		this.setTeamId(tid);
 		this.setCloakId(cid);
+		this.setBalance(0.0);
 	}
 	
 	public JSONObject getJSONString() {
@@ -60,6 +62,34 @@ public class Guest {
 
 	public void setCloakId(int cloakId) {
 		this.cloakId = cloakId;
+	}
+	
+	public double getBalance() {
+		return balance;
+	}
+
+	public void setBalance(double b) {
+		this.balance = b;
+	}
+	
+	/**
+	 * Process a payment
+	 * Returns true and updates the balance if the balance is sufficient
+	 * Returns false otherwise
+	 * @param amount
+	 * @return
+	 */
+	public boolean pay(double amount) {
+		if(balance - amount < 0) {
+			return false;
+		} else {
+			setBalance(balance - amount);
+			return true;
+		}
+	}
+	
+	public void recharge(double amount) {
+		setBalance(balance + amount);
 	}
 
 }

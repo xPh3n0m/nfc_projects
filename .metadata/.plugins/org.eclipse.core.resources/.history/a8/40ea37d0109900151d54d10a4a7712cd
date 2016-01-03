@@ -1,0 +1,5 @@
+package epfl.tnyfeler.eventmanager.view;
+
+public class EventManagerHomepageController {
+
+}

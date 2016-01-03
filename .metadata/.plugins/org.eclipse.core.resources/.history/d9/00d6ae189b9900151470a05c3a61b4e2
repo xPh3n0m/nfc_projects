@@ -1,0 +1,39 @@
+package application.model;
+
+import java.util.List;
+
+import kw.nfc.communication.ConnectDB;
+
+public class Transaction {
+	
+	private List<Order> orderList;
+	private int transactionId;
+	private Guest guest;
+	private double price;
+	
+	private Transaction(int tid, Guest g, double amount, List<Order> orderList) {
+		transactionId = tid;
+	}
+	
+	/**
+	 * Creates a new transaction id, without the need for a guest
+	 * @return
+	 */
+	public static Transaction newTransaction(Guest g, List<Order> orderList, ConnectDB connDB) {
+		double amount = 0;
+		for(Order o : orderList) {
+			amount += o.getItemPrice() * o.getNumItem();
+		}
+		
+		int tid = connDB.newTransaction(g.getGid(), g.getBalance(), amount, g.getBalance() - amount);
+		
+		return new Transaction(tid, g, amount, orderList);
+	}
+	
+	public void processTransaction(int gid, List<Order> orders) {
+		
+		//Get the price of each order, and compute the price of the transaction
+	}
+
+}
+
