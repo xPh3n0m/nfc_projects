@@ -1,0 +1,50 @@
+package application.view;
+
+import java.sql.SQLException;
+
+import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
+import kw.nfc.communication.ConnectDB;
+import kw.nfc.communication.WriteOrder;
+
+public class WristbandRegistrationController {
+
+	@FXML
+	private AnchorPane background;
+    @FXML
+    private Label widInfoLabel;
+    @FXML
+    private Label atrInfoLabel;
+    @FXML
+    private Label statusInfoLabel;
+    @FXML 
+    private Label balanceInfoLabel;
+    
+    /**
+     * The constructor.
+     * The constructor is called before the initialize() method.
+     */
+    public WristbandRegistrationController() {
+    	connDB = new ConnectDB();
+    }
+
+    /**
+     * Initializes the controller class. This method is automatically called
+     * after the fxml file has been loaded.
+     */
+    @FXML
+    private void initialize() {
+    	noBeers.setText("0");
+    	noSpirits.setText("0");
+    	
+    	try {
+			connDB.connect();
+		} catch (SQLException e) {
+			actionsTextField.setText("Error connecting to the Database. CONTACT ADMIN");
+			e.printStackTrace();
+		}
+    }
+}

@@ -1,0 +1,253 @@
+package application.view;
+
+import java.util.Timer;
+import java.util.TimerTask;
+
+import application.ReadWriteNFC;
+import application.model.Guest;
+import application.model.NFCWristband;
+import javafx.concurrent.WorkerStateEvent;
+import javafx.event.EventHandler;
+import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.layout.AnchorPane;
+import kw.nfc.communication.ConnectDB;
+import kw.nfc.communication.NFCCommunication;
+import kw.nfc.communication.ReadNFCCard;
+import kw.nfc.communication.RegisterWristband;
+import kw.nfc.communication.Utility;
+
+public class WristbandRegistrationController {
+
+	@FXML
+	private AnchorPane background;
+    @FXML
+    private Label widInfoLabel;
+    @FXML
+    private Label atrInfoLabel;
+    @FXML
+    private Label statusInfoLabel;
+    @FXML 
+    private Label balanceInfoLabel;
+    @FXML
+    private Label errorLabel;
+    @FXML
+    private Label infoMessageLabel;
+    @FXML
+    private Button registerWristbandButton;
+    @FXML
+    private Button unregisterWristbandButton;
+    
+    
+    private ConnectDB connDB;
+    private NFCCommunication nfcComm;
+    
+    private NFCWristband currentWristband;
+    private Guest currentGuest;
+    
+    private int status;
+    
+    // Reference to the main application.
+    private ReadWriteNFC mainApp;
+    
+    
+    /**
+     * Constructor
+     */
+    public WristbandRegistrationController() {
+    	
+    }
+    
+    /**
+     * Initializes the controller class. This method is automatically called
+     * after the fxml file has been loaded.
+     */
+    @FXML
+    private void initialize() {	
+    	_resetAllFields();
+    	_hideRegistrationButtons();
+    }
+    
+	public void startReadingNFCCards() {
+		// TODO Auto-generated method stub
+		
+		new Timer().schedule(
+			    new TimerTask() {
+
+			        @Override
+			        public void run() {
+			        	readWristband();
+			        }
+			    }, 0, 1000);
+	}
+    
+    /**
+     * Is called by the main application to give a reference back to itself.
+     * 
+     * @param mainApp
+     */
+    public void setMainApp(ReadWriteNFC mainApp) {
+        this.mainApp = mainApp;
+    }
+    
+    /**
+     * This method reads NFC wristbands from the terminal and displays the information on the UI
+     */
+    public void readWristband() {
+    	ReadNFCCard readNFC = new ReadNFCCard(nfcComm);
+    	
+    	readNFC.setOnSucceeded(
+    			new EventHandler<WorkerStateEvent>() {
+
+    		    @Override
+    		    public void handle(WorkerStateEvent t) {
+    		    	NFCWristband wristband = (NFCWristband) t.getSource().getValue();
+    		    	
+    		    	if(wristband == null) {
+    		    		System.exit(0);
+    		    	}
+    		    	
+    		    	if(currentWristband == null) {
+    		    		currentWristband = wristband;
+        		    	if(wristband.isRecognized()) {
+        		    		_fillWristbandInformationLabels(wristband.getWid() + "", wristband.getATR().getBytes().toString(),
+    	    		    			wristband.getStatus() + "",wristband.getBalance() + "");
+        		    		registerWristbandButton.setVisible(false);
+        		    		unregisterWristbandButton.setVisible(true);
+        		    	} else {
+        		    		_fillWristbandInformationLabels("", wristband.getATR().getBytes().toString(),"","");
+        		    		_displayInformationMessage("This wristband has not been recognized. "
+        		    				+ "It is not yet registred");
+        		    		registerWristbandButton.setVisible(true);
+        		    	}
+    		    	}
+    		    }
+    		});
+    		
+    	readNFC.setOnFailed(
+    				new EventHandler<WorkerStateEvent>() {
+    					
+    			    @Override
+    			    public void handle(WorkerStateEvent t) {
+    			    	status = Utility.CARD_ABSCENT;
+    			    	currentGuest = null;
+    			    	currentWristband = null;
+    			    	
+    			    	if(t.getSource().getException() != null) {
+    			    		_displayErrorMessage(t.getSource().getException().getMessage());
+    			    	}
+    			    	
+    			    	_resetAllFields();
+    			    	_hideRegistrationButtons();
+    			    }
+    		});
+    		
+    	readNFC.setOnCancelled(
+    				new EventHandler<WorkerStateEvent>() {
+
+    			    @Override
+    			    public void handle(WorkerStateEvent t) {
+    			    	status = Utility.CARD_ABSCENT;
+    			    	currentGuest = null;
+    			    	currentWristband = null;
+    			    	
+    			    	if(t.getSource().getException() != null) {
+    			    		_displayErrorMessage(t.getSource().getException().getMessage());
+    			    	}
+    			    	
+    			    	_resetAllFields();
+    			    	_hideRegistrationButtons();
+    			    }
+    		});
+    	
+    		readNFC.start();
+    }
+    
+    public void registerWristband() {
+    	RegisterWristband registerWristband = new RegisterWristband(nfcComm, currentWristband, connDB);
+    	
+    	registerWristband.setOnSucceeded(
+    			new EventHandler<WorkerStateEvent>() {
+
+    		    @Override
+    		    public void handle(WorkerStateEvent t) {
+    		    	NFCWristband wristband = (NFCWristband) t.getSource().getValue();
+    		    	currentWristband = wristband;
+        		    if(wristband.isRecognized()) {
+        		    	_displayInformationMessage("Succesfully registered wristband");
+    		    		_fillWristbandInformationLabels(wristband.getWid() + "", wristband.getATR().getBytes().toString(),
+	    		    			wristband.getStatus() + "",wristband.getBalance() + "");
+    		    		unregisterWristbandButton.setVisible(true);
+    		    		registerWristbandButton.setVisible(false);
+        		    } else {
+    		    		_displayInformationMessage("There was a problem registering the wristband. Please try again");
+    		    		registerWristbandButton.setVisible(true);
+    		    	}
+    		    }
+    		});
+    	
+    	registerWristband.setOnFailed(
+				new EventHandler<WorkerStateEvent>() {
+					
+			    @Override
+			    public void handle(WorkerStateEvent t) {
+			    	if(t.getSource().getException() != null) {
+			    		_displayErrorMessage(t.getSource().getException().getMessage());
+			    	}
+			    }
+		});
+		
+    	registerWristband.setOnCancelled(
+				new EventHandler<WorkerStateEvent>() {
+
+			    @Override
+			    public void handle(WorkerStateEvent t) {
+			    	if(t.getSource().getException() != null) {
+			    		_displayErrorMessage(t.getSource().getException().getMessage());
+			    	}						
+			    }
+		});
+	
+    	registerWristband.start();
+    }
+    
+    private void _fillWristbandInformationLabels(String wid, String atr, String status, String balance) {
+    	widInfoLabel.setText(wid);
+    	atrInfoLabel.setText(atr);
+    	statusInfoLabel.setText(status);
+    	balanceInfoLabel.setText(balance);
+    }
+    
+    private void _resetAllFields() {
+    	widInfoLabel.setText("");
+    	atrInfoLabel.setText("");
+    	statusInfoLabel.setText("");
+    	balanceInfoLabel.setText("");
+    	errorLabel.setText("");
+    	infoMessageLabel.setText("");
+    }
+    
+    private void _hideRegistrationButtons() {
+    	registerWristbandButton.setVisible(false);
+    	unregisterWristbandButton.setVisible(false);
+    }
+    
+    private void _displayInformationMessage(String message) {
+    	_resetAllFields();
+    	infoMessageLabel.setText(message);
+    }
+    
+    private void _displayErrorMessage(String errorMessage) {
+    	_resetAllFields();
+    	errorLabel.setText(errorMessage);
+    }
+    
+	public void setConnDB(ConnectDB connDB2) {
+		this.connDB = connDB2;
+	}
+
+	public void setNFCCommunication(NFCCommunication nfcComm2) {
+		this.nfcComm = nfcComm2;
+	}
+}

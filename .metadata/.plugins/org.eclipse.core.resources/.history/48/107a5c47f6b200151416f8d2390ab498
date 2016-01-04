@@ -1,0 +1,41 @@
+package kw.nfc.communication;
+
+import java.sql.SQLException;
+
+import application.model.Guest;
+import application.model.NFCWristband;
+import javafx.concurrent.Service;
+import javafx.concurrent.Task;
+
+public class RegisterWristband extends Service<NFCWristband> {
+
+	private NFCCommunication nfcComm;
+	private Task<Guest> task;
+	private NFCWristband wristband;
+	
+	private ConnectDB connDB;
+	
+	public RegisterWristband(NFCCommunication nfcComm, NFCWristband wristband, ConnectDB connDB) {
+		this.nfcComm = nfcComm;
+		this.connDB = connDB;
+		this.wristband = wristband;
+	}
+
+	@Override
+	protected Task<NFCWristband> createTask() {
+		task = new Task<NFCWristband>() {
+            @Override
+            protected NFCWristband call() throws NFCCardException, SQLException {
+            	// Write the guest in the database
+            	wristband.insertIntoDatabase();
+    			//Guest g = Guest.newGuestInDatabase(guestName, card, connDB);
+    			
+    			// Write the guest on the wristband
+    			nfcComm.writeDataToNFCCard(g.getJSONString().toJSONString(), card);
+            	
+            	return wristband;
+            }
+		};
+		return task;
+	}
+}

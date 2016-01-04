@@ -1,0 +1,186 @@
+package application.view;
+
+import java.sql.SQLException;
+import java.util.Timer;
+import java.util.TimerTask;
+
+import application.ReadWriteNFC;
+import application.model.Guest;
+import application.model.NFCWristband;
+import javafx.concurrent.WorkerStateEvent;
+import javafx.event.EventHandler;
+import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
+import kw.nfc.communication.ConnectDB;
+import kw.nfc.communication.NFCCommunication;
+import kw.nfc.communication.ReadNFCCard;
+import kw.nfc.communication.Utility;
+import kw.nfc.communication.WriteOrder;
+
+public class WristbandRegistrationController {
+
+	@FXML
+	private AnchorPane background;
+    @FXML
+    private Label widInfoLabel;
+    @FXML
+    private Label atrInfoLabel;
+    @FXML
+    private Label statusInfoLabel;
+    @FXML 
+    private Label balanceInfoLabel;
+    @FXML
+    private Label errorLabel;
+    @FXML
+    private Label infoMessageLabel;
+    
+    
+    private ConnectDB connDB;
+    private NFCCommunication nfcComm;
+    
+    private NFCWristband currentWristband;
+    private Guest currentGuest;
+    
+    private int status;
+    
+    // Reference to the main application.
+    private ReadWriteNFC mainApp;
+    
+    
+    /**
+     * Constructor
+     */
+    public WristbandRegistrationController() {
+    	
+    }
+    
+    /**
+     * Initializes the controller class. This method is automatically called
+     * after the fxml file has been loaded.
+     */
+    @FXML
+    private void initialize() {	
+    	widInfoLabel.setText("");
+    	atrInfoLabel.setText("");
+    	statusInfoLabel.setText("");
+    	balanceInfoLabel.setText("");
+    	errorLabel.setText("");
+    }
+    
+	public void startReadingNFCCards() {
+		// TODO Auto-generated method stub
+		
+		new Timer().schedule(
+			    new TimerTask() {
+
+			        @Override
+			        public void run() {
+			        	readWristband();
+			        }
+			    }, 0, 1000);
+	}
+    
+    /**
+     * Is called by the main application to give a reference back to itself.
+     * 
+     * @param mainApp
+     */
+    public void setMainApp(ReadWriteNFC mainApp) {
+        this.mainApp = mainApp;
+
+        // Add observable list data to the table
+    }
+    
+    public void readWristband() {
+    	ReadNFCCard readNFC = new ReadNFCCard(nfcComm);
+    	
+    	readNFC.setOnSucceeded(
+    			new EventHandler<WorkerStateEvent>() {
+
+    		    @Override
+    		    public void handle(WorkerStateEvent t) {
+    		    	NFCWristband wristband = (NFCWristband) t.getSource().getValue();
+    		    	
+    		    	if(currentWristband == null) {
+    		    		currentWristband = wristband;
+        		    	if(wristband.isRecognized()) {
+        		    		_fillWristbandInformationLabels(wristband.getWid() + "", wristband.getATR().getBytes().toString(),
+    	    		    			wristband.getStatus() + "",wristband.getBalance() + "");
+        		    	} else {
+        		    		_displayInformationMessage("This wristband has not been recognized. "
+        		    				+ "It is either corrupted or not yet registred");
+        		    	}
+    		    	}
+    		    }
+    		});
+    		
+    	readNFC.setOnFailed(
+    				new EventHandler<WorkerStateEvent>() {
+    					
+    			    @Override
+    			    public void handle(WorkerStateEvent t) {
+    			    	status = Utility.CARD_ABSCENT;
+    			    	currentGuest = null;
+    			    	currentWristband = null;
+    			    	
+    			    	if(t.getSource().getException() != null) {
+    			    		errorLabel.setText(t.getSource().getException().getMessage());
+    			    	}
+    			    }
+    		});
+    		
+    	readNFC.setOnCancelled(
+    				new EventHandler<WorkerStateEvent>() {
+
+    			    @Override
+    			    public void handle(WorkerStateEvent t) {
+    			    	status = Utility.CARD_ABSCENT;
+    			    	currentGuest = null;
+    			    	currentWristband = null;
+    			    	
+    			    	if(t.getSource().getException() != null) {
+    			    		errorLabel.setText(t.getSource().getException().getMessage());
+    			    	}						
+    			    }
+    		});
+    	
+    		readNFC.start();
+    }
+    
+    private void _fillWristbandInformationLabels(String wid, String atr, String status, String balance) {
+    	widInfoLabel.setText(wid);
+    	atrInfoLabel.setText(atr);
+    	statusInfoLabel.setText(status);
+    	balanceInfoLabel.setText(balance);
+    }
+    
+    private void _resetAllFields() {
+    	widInfoLabel.setText("");
+    	atrInfoLabel.setText("");
+    	statusInfoLabel.setText("");
+    	balanceInfoLabel.setText("");
+    	errorLabel.setText("");
+    	infoMessageLabel.setText("");
+    }
+    
+    private void _displayInformationMessage(String message) {
+    	_resetAllFields();
+    	infoMessageLabel.setText(message);
+    }
+    
+    private void _displayErrorMessage(String errorMessage) {
+    	_resetAllFields()
+    	errorLabel.setText(errorMessage);
+    }
+    
+	public void setConnDB(ConnectDB connDB2) {
+		this.connDB = connDB2;
+	}
+
+	public void setNFCCommunication(NFCCommunication nfcComm2) {
+		this.nfcComm = nfcComm2;
+	}
+}

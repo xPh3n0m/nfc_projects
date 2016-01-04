@@ -1,0 +1,16 @@
+1451913944082	Delete element
+1451913947093	Delete element
+1451914837068	Move compilation unit
+1451914855513	Rename type 'NFCCard'
+1451914872676	Move compilation unit
+1451915668363	Rename method 'setNewGuest'
+1451916737285	Rename local variable 'guestJSON'
+1451917163382	Encapsulate field 'wid'
+1451917167534	Encapsulate field 'gid'
+1451917172386	Encapsulate field 'balance'
+1451917176302	Encapsulate field 'status'
+1451917262726	Rename field 'currentCard'
+1451917274682	Rename local variable 'newNfcCard'
+1451918052183	Delete element
+1451918429219	Encapsulate field 'recognized'
+1451921521792	Rename local variable 'currentCard'
